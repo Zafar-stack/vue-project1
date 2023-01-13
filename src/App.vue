@@ -12,7 +12,7 @@
     v-bind:todos="filteredToDo"
     @remove-todo="removeToDo"
   />
-  <p v-else>Nothing...</p>
+  <p v-else>Nothing here...</p>
 
 </template>
 
@@ -71,5 +71,6 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  max-width: 21px;
 }
 </style>
