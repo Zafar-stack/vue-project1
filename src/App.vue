@@ -27,21 +27,12 @@ export default {
       filter: 'all'
     }
   },
-  mounted() {
-    fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
-      .then(response => response.json())
-      .then(json => {
-        this.todos = json
-      })
-  },
+  
   components: {
     ToDoList, AddToDo
   },
   computed: {
     filteredToDo() {
-      if (this.filter === 'all') {
-        return this.todos
-      }
 
       if (this.filter === 'completed') {
         return this.todos.filter(t => t.completed)
@@ -50,6 +41,8 @@ export default {
       if (this.filter === 'not-completed') {
         return this.todos.filter(t => !t.completed)
       }
+
+      return this.todos
     }
   },
   methods: {
@@ -58,6 +51,13 @@ export default {
     },
     AddToDo(todo) {
       this.todos.push(todo)
+    },
+    DataToDo() {
+      fetch('https://jsonplaceholder.typicode.com/todos?_limit=9')
+        .then(response => response.json())
+        .then(json => {
+          this.todos = json
+        })
     }
   }
 }
