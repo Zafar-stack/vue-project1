@@ -1,8 +1,8 @@
 <template>
-    <form @submit.prevent="onSubmit" action="#">
+    <form @submit.prevent="onSubmit">
         <input type="text" v-model="title">
         <button type="submit">Create</button>
-    </form>
+    </form>    
 </template>
 
 <script>
@@ -20,7 +20,6 @@ export default {
                     title: this.title,
                     completed: false
                 }
-
                 this.$emit('add-todo', newToDo)
                 this.title = ''
             }

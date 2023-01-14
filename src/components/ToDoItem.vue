@@ -2,7 +2,9 @@
     <li>
         <span :class="{done: todo.completed}">
             <input type="checkbox" 
-                   @change="todo.completed = !todo.completed">
+                   v-model="todo.completed"
+                   @change="$emit('filtering-list', todo.completed)"
+                   />
             <strong>{{ index }}</strong>
             {{ todo.title }}
             <button class="rm" 
@@ -20,11 +22,6 @@ export default {
             required: true
         },
         index: Number
-    },
-    filters: {
-        upperCased: function(value) {
-            return value.toUpperCase()
-        }
     }
     
 }

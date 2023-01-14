@@ -2,10 +2,12 @@
     <div>
         <ul>
             <ToDoItem 
-                v-for="(todo, i) in todos" 
-                :todo="todo"
-                :index="i"
-                @remove-todo="removeToDo"
+                v-for="(todo, key, i) in todos" 
+                :todo="todo" 
+                :index="i" 
+                :key="todo.id" 
+                @remove-todo="removeToDo" 
+                @filtering-list="filterList"
             />
         </ul>
     </div>
@@ -21,6 +23,9 @@ export default {
     methods: {
         removeToDo(id) {
             this.$emit('remove-todo', id)
+        },
+        filterList(completed) {
+            this.$emit('filtering-list', completed)
         }
     }
 }
