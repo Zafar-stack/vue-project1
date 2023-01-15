@@ -1,7 +1,7 @@
 <template>
   <h1>Todo app</h1>
   <AddToDo @add-todo="AddToDo" />
-  <select v-model="filter">
+  <select v-model="filters">
     <option value="all">All</option>
     <option value="completed">Completed</option>
     <option value="not-completed">Not Completed</option>
@@ -27,41 +27,28 @@ export default {
   data() {
     return {
       todos: [],
-      filter: 'all',
+      filters: 'all',
     }
   },
-  
-  mounted() {
-    this.getData()
 
-    if(localStorage.getItem('items')) {
-      try {
-        this.items = JSON.parse(localStorage.getItem('items'));
-      } catch(e) {
-        localStorage.removeItem('items');
-      }
+  created() {
+    if(localStorage.getItem("todos")) {
+      this.todos = JSON.parse(localStorage.getItem("todos"))
     }
+  },
+
+  mounted() {
+    // this.getData()
+
   },
   
   components: {
     ToDoList, AddToDo
   },
 
-  computed: {
-    filteredToDo() {
-      if (this.filter === 'completed') {
-        return this.todos.filter(t => t.completed)
-      }
-      if (this.filter === 'not-completed') {
-        return this.todos.filter(t => !t.completed)
-      }
-      return this.todos
-    }
-  },
-
   methods: {
     removeToDo(id) {
-      this.todos = this.todos.filter(t => t.id !== id)
+      this.todos = this.todos.filter(t => t.id !== id) 
       this.saveItems()
     },
 
@@ -77,19 +64,32 @@ export default {
       this.saveItems()
     },
 
-    getData() {
-      fetch('https://jsonplaceholder.typicode.com/todos?_limit=5')
-        .then(response => response.json())
-        .then(json => {
-          this.todos = json
-        })
-    },
-
     saveItems() {
-      let parsed = JSON.stringify(this.items);
-      localStorage.setItem('items', parsed);
+        let parsed = JSON.stringify(this.todos);
+        localStorage.setItem('todos', parsed);
+    }
+
+    // getData() {
+    //   fetch('https://jsonplaceholder.typicode.com/todos?_limit=7')
+    //     .then(response => response.json())
+    //     .then(json => {
+    //       this.todos = json
+    //     })
+    // }
+  },
+
+  computed: {
+    filteredToDo() {
+      if (this.filters === 'completed') {
+        return this.todos.filter(t => t.completed)
+      }
+      if (this.filters === 'not-completed') {
+        return this.todos.filter(t => !t.completed)
+      }
+      return this.todos
     }
   }
+
 }
 </script>
 
