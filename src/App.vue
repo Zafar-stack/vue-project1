@@ -4,7 +4,7 @@
     @exist-todo="isExist"
     @add-todo="AddToDo" 
   />
-  <p>{{ exists }}</p>
+  <p v-if="showWarning">This title is already exist!</p>
   <select v-model="filters">
     <option value="all">All</option>
     <option value="completed">Completed</option>
@@ -35,7 +35,7 @@ export default {
     return {
       todos: [],
       filters: 'all',
-      exists: ''
+      showWarning: false
     }
   },
 
@@ -76,22 +76,16 @@ export default {
     },
 
     isExist(todo) {
-      for(var i=0; i < this.todos.length; i++){
-        if( this.todos[i].title == todo.title){
-          return true
-        }
-      }
-      return false
+      return this.todos.findIndex(k=> k.title === todo.title) > -1
     },
 
     AddToDo(todo) {
-      if (this.isExist(todo) == false) {
-        this.todos.push(todo)
-        this.saveItems()
-        this.exists = ''
-      }else{
-        this.exists = 'This data is already exist!'
+      if (this.isExist(todo)) {
+        this.showWarning = true
+        return 
       }
+      this.todos.push(todo)
+      this.saveItems()
     },
 
     filterList() {
