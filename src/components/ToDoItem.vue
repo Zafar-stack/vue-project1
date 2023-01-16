@@ -6,11 +6,12 @@
                    @change="$emit('filtering-list', todo.completed)"
                    />
             <strong>{{ index + 1}}</strong>
-            {{ todo.title }}
+            {{ todo.title }}    
+            {{ info[0].name }}
         </span>
-        <button class="rm" 
-                @click="$emit('remove-todo', todo.id)"
-        >&times;</button>
+        <div class="btn">
+            <button class="rm" @click="$emit('remove-todo', todo.id)" >&times;</button>
+        </div>
     </li>
 </template>
 
@@ -22,7 +23,8 @@ export default {
             required: true
         },
         index: Number
-    }
+    },
+    inject: ['info']
 }
 </script>
 
@@ -39,6 +41,20 @@ export default {
         color: #fff;
         border-radius: 50%;
         font-weight: bold;
+    }
+    .rmrm{
+        background-color: green;
+        color: #fff;
+        border-radius: 50%;
+        font-weight: bold;
+    }
+
+    .btn{
+        display: inline-block;
+    }
+
+    button{
+        margin: 0 5px 0 5px;
     }
 
     input{

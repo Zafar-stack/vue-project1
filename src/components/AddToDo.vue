@@ -1,8 +1,10 @@
 <template>
-    <form @submit.prevent="onSubmit">
-        <input type="text" v-model="title">
-        <button type="submit">Create</button>
-    </form>    
+    <div class="inputs">
+        <form @submit.prevent="onSubmit">
+            <input type="text" v-model="title">
+            <button type="submit">Create</button>
+        </form>
+    </div>    
 </template>
 
 <script>
@@ -31,10 +33,14 @@ export default {
 
 <style scoped>
     form {
-        display: flex;
+        display: inline-block;
     }
 
     input {
         width: 300px;
+    }
+    .inputs{
+        text-align: center;
+        margin: 15px 5px 15px 5px;
     }
 </style>

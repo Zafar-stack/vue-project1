@@ -26,7 +26,7 @@ export default {
         },
         filterList(completed) {
             this.$emit('filtering-list', completed)
-        }
+        },
     }
 }
 

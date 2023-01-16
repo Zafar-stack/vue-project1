@@ -1,5 +1,12 @@
 <template>
   <h1>Todo app</h1>
+  <div class="search-todo">
+    <form @submit.prevent="searchToDo">
+      <label for="search">Search</label>
+      <input type="search" id="search" v-model="search" />
+      <button type="submit">Search</button>
+    </form>
+  </div>
   <AddToDo 
     @exist-todo="isExist"
     @add-todo="AddToDo" 
@@ -35,21 +42,44 @@ export default {
     return {
       todos: [],
       filters: 'all',
-      showWarning: false
+      showWarning: false,
+      anything: [
+        {name: 'qwe', age: 18},
+        {name: 'asd', age: 19},
+        {name: 'zxc', age: 17},
+      ],
+      search: ''
     }
   },
 
+  provide() {
+    return {
+      info: this.anything
+    }
+  },
+  
+  components: {
+    ToDoList, AddToDo
+  },
+
   computed: {
+    
     filteredToDo() {
-      if (this.filters === 'completed') {
-        return this.todos.filter(function(t) {
-          return t.completed
+      var tempToDo = this.todos 
+      
+      if(this.search.trim()) {
+        tempToDo = tempToDo.filter(g => {
+          return g.title.toLowerCase().includes(this.search.toLowerCase())
         })
       }
-      if (this.filters === 'not-completed') {
-        return this.todos.filter(t => !t.completed)
+      
+      if (this.filters === 'completed') {
+        return tempToDo.filter(t => t.completed)
       }
-      return this.todos
+      if (this.filters === 'not-completed') {
+        return tempToDo.filter(t => !t.completed)
+      }
+      return tempToDo
     }
   },
 
@@ -63,20 +93,16 @@ export default {
     // this.getData()
 
   },
-  
-  components: {
-    ToDoList, AddToDo
-  },
 
   methods: {
-    
+
     removeToDo(id) {
       this.todos = this.todos.filter(t => t.id !== id)
       this.saveItems()
     },
 
     isExist(todo) {
-      return this.todos.findIndex(k=> k.title === todo.title) > -1
+      return this.todos.findIndex( k=> k.title === todo.title) > -1
     },
 
     AddToDo(todo) {
@@ -86,6 +112,7 @@ export default {
       }
       this.todos.push(todo)
       this.saveItems()
+      this.showWarning = false
     },
 
     filterList() {
