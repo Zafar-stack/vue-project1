@@ -2,7 +2,7 @@
     <div>
         <ul>
             <ToDoItem 
-                v-for="(todo, key, i) in todos" 
+                v-for="(todo, i) in todos" 
                 :todo="todo" 
                 :index="i" 
                 :key="todo.id" 

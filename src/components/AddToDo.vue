@@ -21,6 +21,7 @@ export default {
                     completed: false
                 }
                 this.$emit('add-todo', newToDo)
+                this.$emit('exist-todo', newToDo)
                 this.title = ''
             }
         }

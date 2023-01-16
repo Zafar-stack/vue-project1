@@ -5,12 +5,12 @@
                    v-model="todo.completed"
                    @change="$emit('filtering-list', todo.completed)"
                    />
-            <strong>{{ index }}</strong>
+            <strong>{{ index + 1}}</strong>
             {{ todo.title }}
-            <button class="rm" 
-                    @click="$emit('remove-todo', todo.id)"
-            >&times;</button>
         </span>
+        <button class="rm" 
+                @click="$emit('remove-todo', todo.id)"
+        >&times;</button>
     </li>
 </template>
 
@@ -23,7 +23,6 @@ export default {
         },
         index: Number
     }
-    
 }
 </script>
 

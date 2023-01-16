@@ -1,6 +1,10 @@
 <template>
   <h1>Todo app</h1>
-  <AddToDo @add-todo="AddToDo" />
+  <AddToDo 
+    @exist-todo="isExist"
+    @add-todo="AddToDo" 
+  />
+  <p>{{ exists }}</p>
   <select v-model="filters">
     <option value="all">All</option>
     <option value="completed">Completed</option>
@@ -20,6 +24,9 @@
 <script>
 import ToDoList from "@/components/ToDoList.vue";
 import AddToDo from "@/components/AddToDo.vue";
+
+const StorageKey = 'todos'
+
 export default {
   
   name: 'App',
@@ -28,12 +35,27 @@ export default {
     return {
       todos: [],
       filters: 'all',
+      exists: ''
+    }
+  },
+
+  computed: {
+    filteredToDo() {
+      if (this.filters === 'completed') {
+        return this.todos.filter(function(t) {
+          return t.completed
+        })
+      }
+      if (this.filters === 'not-completed') {
+        return this.todos.filter(t => !t.completed)
+      }
+      return this.todos
     }
   },
 
   created() {
-    if(localStorage.getItem("todos")) {
-      this.todos = JSON.parse(localStorage.getItem("todos"))
+    if(localStorage.getItem(StorageKey)) {
+      this.todos = JSON.parse(localStorage.getItem(StorageKey))
     }
   },
 
@@ -47,16 +69,29 @@ export default {
   },
 
   methods: {
+    
     removeToDo(id) {
-      this.todos = this.todos.filter(t => t.id !== id) 
+      this.todos = this.todos.filter(t => t.id !== id)
       this.saveItems()
     },
 
+    isExist(todo) {
+      for(var i=0; i < this.todos.length; i++){
+        if( this.todos[i].title == todo.title){
+          return true
+        }
+      }
+      return false
+    },
+
     AddToDo(todo) {
-      // console.log(this.todos.indexOf(todo.title) = -1)
-      // console.log(id)
-      this.todos.push(todo)
-      this.saveItems()
+      if (this.isExist(todo) == false) {
+        this.todos.push(todo)
+        this.saveItems()
+        this.exists = ''
+      }else{
+        this.exists = 'This data is already exist!'
+      }
     },
 
     filterList() {
@@ -66,7 +101,7 @@ export default {
 
     saveItems() {
         let parsed = JSON.stringify(this.todos);
-        localStorage.setItem('todos', parsed);
+        localStorage.setItem(StorageKey, parsed);
     }
 
     // getData() {
@@ -76,19 +111,8 @@ export default {
     //       this.todos = json
     //     })
     // }
-  },
-
-  computed: {
-    filteredToDo() {
-      if (this.filters === 'completed') {
-        return this.todos.filter(t => t.completed)
-      }
-      if (this.filters === 'not-completed') {
-        return this.todos.filter(t => !t.completed)
-      }
-      return this.todos
-    }
   }
+
 
 }
 </script>
