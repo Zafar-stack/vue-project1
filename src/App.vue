@@ -28,7 +28,7 @@
     </div>
     <ToDoList 
       v-if="filteredToDo.length"
-      v-bind:todos="filteredToDo"
+      v-bind:todos="paginate(filteredToDo)"
       @filtering-list="filterList" 
       @remove-todo="removeToDo"
     />
@@ -43,7 +43,7 @@
       <button
         class="pagination-circle" 
         type="button" 
-        v-for="pageNumber in pages.slice(page-1, page+5)" 
+        v-for="pageNumber in setPages" 
         :class="{active: isPageActive(pageNumber)}" 
         @click="page = pageNumber"
       > {{pageNumber}} </button>
@@ -51,7 +51,7 @@
         class="pagination-pn" 
         type="button" 
         @click="page++" 
-        v-if="page < pages.length" 
+        v-if="page < setPages" 
       > >> </button>
     </div>
 	</div>
@@ -79,8 +79,7 @@ export default {
       // ],
       search: '',
       page: 1,
-      perPage: 5,
-      pages: [],
+      limit: 5,
     }
   },
 
@@ -97,11 +96,7 @@ export default {
   computed: {
     
     filteredToDo() {
-      var tempToDo = this.todos 
-      
-      if(this.pages) {
-        return this.paginate(tempToDo);
-      }
+      var tempToDo = this.todos
 
       if(this.search.trim()) {
         tempToDo = tempToDo.filter(g => {
@@ -115,19 +110,21 @@ export default {
       if (this.filters === 'not-completed') {
         return tempToDo.filter(t => !t.completed)
       }
-      return tempToDo
-    }
+      if (this.filters === 'all') {
+        return tempToDo
+      }
+      
+    },
+
+    setPages() {
+      return Math.ceil(this.filteredToDo.length / this.limit);
+    },
   },
 
   created() {
     this.getToDo()
   },
 
-  watch: {
-    todos () {
-      this.setPages();
-    }
-  },
 
   mounted() {
     // this.getData()
@@ -146,18 +143,11 @@ export default {
       }           
     },
 
-    setPages() {
-      let numberOfPages = Math.ceil(this.todos.length / this.perPage);
-      for (let index = 1; index <= numberOfPages; index++) {
-        this.pages.push(index);
-      }
-    },
-
     paginate (todos) {
       let page = this.page;
-      let perPage = this.perPage;
-      let from = (page * perPage) - perPage;
-      let to = (page * perPage);
+      let limit = this.limit;
+      let from = (page * limit) - limit;
+      let to = (page * limit);
       return todos.slice(from, to);
     },
 
