@@ -1,8 +1,8 @@
 <template>
-    <div class="inputs">
+    <div class="add-form">
         <form @submit.prevent="onSubmit">
-            <input type="text" v-model="title">
-            <button type="submit">Create</button>
+            <input type="text" v-model="title" placeholder="Add todos here...">
+            <button type="submit" class="btn">Create</button>
         </form>
     </div>    
 </template>
@@ -33,14 +33,26 @@ export default {
 
 <style scoped>
     form {
-        display: inline-block;
+        display: flex;
     }
 
     input {
-        width: 300px;
+        width: 100%;
+        border: 1px solid #008080;
+        padding: 10px 15px;
+        border-radius: 4px;
     }
-    .inputs{
+    .add-form{
         text-align: center;
-        margin: 15px 5px 15px 5px;
+        padding: 15px;
+    }
+
+    .btn{
+        padding: 10px 15px;
+        background: none;
+        color: darkslategray;
+        border: 1px solid black;
+        border-radius: 4px;
+        margin-left: 5px;
     }
 </style>

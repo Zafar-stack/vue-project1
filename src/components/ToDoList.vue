@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="todolist">
         <ul>
             <ToDoItem 
                 v-for="(todo, i) in todos" 
@@ -37,5 +37,9 @@ export default {
         list-style: none;
         margin: 0;
         padding: 0;
+    }
+
+    .todolist{
+        padding: 20px;
     }
 </style>

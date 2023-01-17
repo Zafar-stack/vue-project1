@@ -1,18 +1,19 @@
 <template>
-    <li>
-        <span :class="{done: todo.completed}">
-            <input type="checkbox" 
-                   v-model="todo.completed"
-                   @change="$emit('filtering-list', todo.completed)"
-                   />
-            <strong>{{ index + 1}}</strong>
-            {{ todo.title }}    
-            {{ info[0].name }}
-        </span>
-        <div class="btn">
-            <button class="rm" @click="$emit('remove-todo', todo.id)" >&times;</button>
-        </div>
-    </li>
+    <div class="show-todo">
+        <li>
+            <span :class="{done: todo.completed}">
+                <input type="checkbox" 
+                       class="checkbox"
+                       v-model="todo.completed"
+                       @change="$emit('filtering-list', todo.completed)"
+                       />
+                <strong class="strn">{{ index + 1}}</strong>
+                {{ todo.title }}    
+                <!-- {{ info[0].name }} -->
+            </span>
+            <button class="btn" @click="$emit('remove-todo', todo.id)" >&times;</button>
+        </li>
+    </div>
 </template>
 
 <script>
@@ -24,43 +25,45 @@ export default {
         },
         index: Number
     },
-    inject: ['info']
+    // inject: ['info']
 }
 </script>
 
 <style scoped>
-    li {
-        border: 1px solid #ccc;
+
+    
+    .show-todo{
+        text-align: center;
+    }
+
+    .show-todo li {
         display: flex;
         justify-content: space-between;
-        padding: .5rem 2rem;
-        margin-bottom: 1rem;
+        padding: 5px;
+        margin: 10px;
+        border: 1px solid #008080;
+        border-radius: 4px;
+        text-align: center;
     }
-    .rm{
-        background-color: red;
-        color: #fff;
-        border-radius: 50%;
-        font-weight: bold;
-    }
-    .rmrm{
-        background-color: green;
-        color: #fff;
-        border-radius: 50%;
-        font-weight: bold;
+    .show-todo span{
+        padding: 5px;
     }
 
     .btn{
-        display: inline-block;
+        padding: 5px;
+        background: none;
+        border-radius: 50%;
+        color: paleturquoise;
+        background-color: red;
     }
 
-    button{
-        margin: 0 5px 0 5px;
-    }
-
-    input{
-        margin-right: 1px;
-    }
     .done{
         text-decoration: line-through;
     }
+
+    .strn{
+        padding: 5px;
+    }
+    
+
 </style>
