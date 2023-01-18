@@ -3,15 +3,18 @@
         <li>
             <span :class="{done: todo.completed}">
                 <input type="checkbox" 
-                       class="checkbox"
-                       v-model="todo.completed"
+                       class="checkbox" 
+                       v-model="todo.completed" 
                        @change="$emit('filtering-list', todo.completed)"
                        />
-                <strong class="strn">{{ index + 1}}</strong>
+                <strong class="strn">{{ index + 1 }}</strong>
                 {{ todo.title }}    
                 <!-- {{ info[0].name }} -->
             </span>
-            <button class="btn" @click="$emit('remove-todo', todo.id)" >&times;</button>
+            <div class="btns">
+                <button class="btn1" @click="$emit('edit-list', todo)" >🖋</button>
+                <button class="btn" @click="$emit('remove-todo', todo.id)" >❌</button>
+            </div>
         </li>
     </div>
 </template>
@@ -30,8 +33,6 @@ export default {
 </script>
 
 <style scoped>
-
-    
     .show-todo{
         text-align: center;
     }
@@ -52,9 +53,20 @@ export default {
     .btn{
         padding: 5px;
         background: none;
-        border-radius: 50%;
+        border-radius: 100%;
         color: paleturquoise;
         background-color: red;
+        align-items: center;
+        margin-left: 5px;
+    }
+    .btn1{
+        padding: 5px;
+        background: none;
+        border-radius: 100%;
+        color: paleturquoise;
+        background-color: grey;
+        align-items: center;
+        margin-left: 5px;
     }
 
     .done{
@@ -63,6 +75,7 @@ export default {
 
     .strn{
         padding: 5px;
+        align-items: center;
     }
     
 

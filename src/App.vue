@@ -1,61 +1,86 @@
 <template>
   <div class="app">
+    
+    
     <h1>Todo app</h1>
-    <div class="search-todo">
-      <form @submit.prevent="searchToDo">
-        <input 
-          type="search" 
-          id="search" 
-          v-model="search" 
-          placeholder="Search here..." 
+    <div class="main">
+      <div class="search-todo">
+          <select v-model="filters">
+            <option value="all">All</option>
+            <option value="completed">Completed</option>
+            <option value="not-completed">Not Completed</option>
+          </select>
+          <form @submit.prevent="filteredToDo">
+            <input 
+              type="search" 
+              id="search" 
+              v-model="search" 
+              placeholder="Search here..." 
+            />
+            <button 
+              type="submit"
+            >Search</button>
+          </form>
+      </div>
+    
+    
+      <AddToDo 
+        @exist-todo="isExist"
+        @add-todo="AddToDo" 
+        :editingData="editingData"
+      />
+    
+      
+      
+      
+      <p v-if="showWarning">This title is already exist!</p>
+      
+      
+      <div class="container">
+        <ToDoList 
+          v-if="filteredToDo.length" 
+          v-bind:todos="paginate(filteredToDo)" 
+          @filtering-list="filterList" 
+          @remove-todo="removeToDo"  
+          @edit-list="editList" 
         />
-        <button 
-          type="submit"
-        >Search</button>
-      </form>
-    </div>
-    <AddToDo 
-      @exist-todo="isExist"
-      @add-todo="AddToDo" 
-    />
-    <p v-if="showWarning">This title is already exist!</p>
-    <div class="filters">
-      <select v-model="filters" class="filter-todo">
-        <option value="all">All</option>
-        <option value="completed">Completed</option>
-        <option value="not-completed">Not Completed</option>
-      </select>
-    </div>
-    <ToDoList 
-      v-if="filteredToDo.length"
-      v-bind:todos="paginate(filteredToDo)"
-      @filtering-list="filterList" 
-      @remove-todo="removeToDo"
-    />
-    <p v-else>Nothing here...</p>
-    <div>
-      <button 
-        class="pagination-pn" 
-        type="button" 
-        v-if="page != 1" 
-        @click="page--"
-        > &lt&lt </button>
-      <button
-        class="pagination-circle" 
-        type="button" 
-        v-for="pageNumber in setPages" 
-        :class="{active: isPageActive(pageNumber)}" 
-        @click="page = pageNumber"
-      > {{pageNumber}} </button>
-      <button 
-        class="pagination-pn" 
-        type="button" 
-        @click="page++" 
-        v-if="page < setPages" 
-      > >> </button>
-    </div>
-	</div>
+        
+        <p v-else>Nothing here...</p>
+        
+        
+        
+        <div class="pagination-nav">
+          <button 
+            class="pagination-pn" 
+            type="button" 
+            v-if="page != 1" 
+            @click="page--" 
+            > &lt&lt 
+          </button>
+          <button 
+            class="pagination-circle" 
+            type="button" 
+            v-for="pageNumber in setPages" 
+            :class="{active: isPageActive(pageNumber)}" 
+            @click="page = pageNumber"
+          > {{pageNumber}} 
+          </button>
+          <button 
+            class="pagination-pn" 
+            type="button" 
+            @click="page++" 
+            v-if="page < setPages" 
+          > >> 
+          </button>
+        </div>
+      </div>
+
+
+    </div>  
+  </div>
 </template>
+
+
 
 <script>
 import ToDoList from "@/components/ToDoList.vue";
@@ -80,6 +105,7 @@ export default {
       search: '',
       page: 1,
       limit: 5,
+      editingData: {}
     }
   },
 
@@ -97,6 +123,7 @@ export default {
     
     filteredToDo() {
       var tempToDo = this.todos
+      this.showWarning = false
 
       if(this.search.trim()) {
         tempToDo = tempToDo.filter(g => {
@@ -170,6 +197,10 @@ export default {
       this.showWarning = false
     },
 
+    editList(todo) {
+      this.editingData = todo
+    },
+
     filterList() {
       this.todos.completed = !this.todos.completed
       this.saveItems()
@@ -189,77 +220,9 @@ export default {
     // }
   }
 
-
 }
 </script>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-}
-
-.app{
-  padding: 20px;
-}
-
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 30px;
-}
-
-.search-todo{
-  padding: 15px;
-  text-align: left;       
-}
-.search-todo input{
-  border: 1px solid #008080;
-  padding: 10px 15px;
-  border-radius: 4px;
-}
-.search-todo button{
-  padding: 10px 15px;
-  background: none;
-  color: darkslategray;
-  border: 1px solid black; 
-  border-radius: 4px;
-  margin-left: 5px;  
-}
-
-.filters{
-  padding: 15px;
-}
-.filter-todo{
-  border: 1px solid #008080;
-  padding: 10px 15px;
-  border-radius: 4px;
-}
-
-.pagination-circle{
-  padding: 10px 15px;
-  background: none;
-  color: darkslategray;
-  border: 1px solid black; 
-  border-radius: 50%;
-  margin: 5px;  
-}
-
-.pagination-pn{
-  padding: 10px 15px;
-  background: none;
-  color: darkslategray;
-  border: 1px solid black; 
-  border-radius: 30%;
-  margin: 5px;  
-}
-
-.active {
-  background-color: #4AAE9B;
-  color: #ffffff;
-}
-
+  @import './assets/style.css';
 </style>

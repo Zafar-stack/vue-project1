@@ -1,19 +1,25 @@
 <template>
-    <div class="add-form">
-        <form @submit.prevent="onSubmit">
+        <div class="add-form">
+        <form @submit.prevent="onSubmit" style="padding: 15px;">
             <input type="text" v-model="title" placeholder="Add todos here...">
             <button type="submit" class="btn">Create</button>
+            <p v-if="editingData">{{ editingData.title }}</p>
         </form>
     </div>    
 </template>
 
+
 <script>
 export default {
+    
     data() {
         return {
             title: ''
         }
     },
+
+    props: ['editingData'],
+
     methods: {
         onSubmit() {
             if (this.title.trim()) {
@@ -26,7 +32,7 @@ export default {
                 this.$emit('exist-todo', newToDo)
                 this.title = ''
             }
-        }
+        },
     }
 }
 </script>
@@ -44,7 +50,7 @@ export default {
     }
     .add-form{
         text-align: center;
-        padding: 15px;
+        padding: 0 15px 0 15px;
     }
 
     .btn{

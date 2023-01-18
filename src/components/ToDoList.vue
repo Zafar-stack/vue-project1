@@ -7,7 +7,8 @@
                 :index="i" 
                 :key="todo.id" 
                 @remove-todo="removeToDo" 
-                @filtering-list="filterList"
+                @filtering-list="filterList" 
+                @edit-list="editList" 
             />
         </ul>
     </div>
@@ -16,17 +17,25 @@
 <script>
 import ToDoItem from '@/components/ToDoItem.vue'
 export default {
+    
     props: ['todos'],
+    
     components: {
         ToDoItem
     },
+
     methods: {
         removeToDo(id) {
             this.$emit('remove-todo', id)
         },
+        
         filterList(completed) {
             this.$emit('filtering-list', completed)
         },
+        
+        editList(todo) {
+            this.$emit('edit-list', todo)
+        }
     }
 }
 

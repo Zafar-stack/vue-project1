@@ -1,0 +1,90 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.app{
+  padding: 20px;
+}
+
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 30px;
+}
+
+.search-todo{
+  padding: 0 15px 0 15px;
+  margin: 0 15px 0 15px;
+  text-align: left;  
+  display: flex;
+  align-items: center;     
+}
+.search-todo input{
+  border: 1px solid #008080;
+  padding: 10px 15px;
+  border-radius: 4px;
+}
+.search-todo button{
+  padding: 10px 15px;
+  background: none;
+  color: darkslategray;
+  border: 1px solid black; 
+  border-radius: 4px;
+  margin-left: 5px;  
+}
+.search-todo select{  
+  border: 1px solid #008080;
+  padding: 10px;
+  margin-right: 5px;
+  border-radius: 4px;
+}
+
+
+.pagination-nav{
+  bottom: 0px;
+}
+.pagination-circle{
+  padding: 10px 15px;
+  background: none;
+  color: darkslategray;
+  border: 1px solid black; 
+  border-radius: 50%;
+  margin: 5px;
+}
+.pagination-pn{
+  padding: 10px 15px;
+  background: none;
+  color: darkslategray;
+  border: 1px solid black; 
+  border-radius: 30%;
+  margin: 5px;  
+}
+
+.active {
+  background-color: #4AAE9B;
+  color: #ffffff;
+}
+
+
+
+
+
+
+.main{
+  height: 500px;
+  max-height: 460px;
+  border: 2px solid;
+  border-radius: 2%;
+  padding: 20px;
+  margin: 20px;
+  display: inline-block;
+}
+
+.container{
+  position: relative;
+  
+}
