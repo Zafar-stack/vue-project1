@@ -3,7 +3,6 @@
         <form @submit.prevent="onSubmit" style="padding: 15px;">
             <input type="text" v-model="title" placeholder="Add todos here...">
             <button type="submit" class="btn">Create</button>
-            <p v-if="editingData">{{ editingData.title }}</p>
         </form>
     </div>    
 </template>
@@ -17,8 +16,6 @@ export default {
             title: ''
         }
     },
-
-    props: ['editingData'],
 
     methods: {
         onSubmit() {
@@ -42,15 +39,17 @@ export default {
         display: flex;
     }
 
-    input {
+
+    .add-form{
+        text-align: center;
+        padding: 0 15px 0 15px;
+    }
+
+    .add-form input {
         width: 100%;
         border: 1px solid #008080;
         padding: 10px 15px;
         border-radius: 4px;
-    }
-    .add-form{
-        text-align: center;
-        padding: 0 15px 0 15px;
     }
 
     .btn{

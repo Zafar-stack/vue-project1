@@ -1,15 +1,14 @@
-<template>
-  <div class="app">
-    
-    
-    <h1>Todo app</h1>
-    <div class="main">
+<template>   
+      <h1>ToDo list App</h1>
       <div class="search-todo">
+        <div class="select">
           <select v-model="filters">
             <option value="all">All</option>
             <option value="completed">Completed</option>
             <option value="not-completed">Not Completed</option>
           </select>
+        </div>
+        <div class="forms">
           <form @submit.prevent="filteredToDo">
             <input 
               type="search" 
@@ -17,16 +16,15 @@
               v-model="search" 
               placeholder="Search here..." 
             />
-            <button 
-              type="submit"
-            >Search</button>
           </form>
+        </div>
       </div>
     
     
       <AddToDo 
         @exist-todo="isExist"
         @add-todo="AddToDo" 
+        ref="changeData"
         :editingData="editingData"
       />
     
@@ -46,8 +44,6 @@
         />
         
         <p v-else>Nothing here...</p>
-        
-        
         
         <div class="pagination-nav">
           <button 
@@ -75,9 +71,7 @@
         </div>
       </div>
 
-
-    </div>  
-  </div>
+  
 </template>
 
 
@@ -198,7 +192,7 @@ export default {
     },
 
     editList(todo) {
-      this.editingData = todo
+      this.$refs.changeData.title = todo.title
     },
 
     filterList() {

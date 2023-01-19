@@ -3,42 +3,42 @@
   padding: 0;
 }
 
-.app{
-  padding: 20px;
-}
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 30px;
+  max-width: 474px;
+  background: rgb(253 236 236 / 10%);;
+  margin: 50px auto;
+  border-radius: 7px;
+  padding: 28px 0 30px;
+  box-shadow: 0 10px 30px rgb(64 102 104 / 56%);;
 }
 
 .search-todo{
-  padding: 0 15px 0 15px;
-  margin: 0 15px 0 15px;
-  text-align: left;  
+  padding-left: 15px;
+  padding-right: 15px;
   display: flex;
-  align-items: center;     
 }
-.search-todo input{
+.forms{
+  width: 100%;
+  text-align: left;
+  padding: 10px 15px;
+}
+.forms input{
   border: 1px solid #008080;
+  width: 100%;
   padding: 10px 15px;
   border-radius: 4px;
 }
-.search-todo button{
+.select{
   padding: 10px 15px;
-  background: none;
-  color: darkslategray;
-  border: 1px solid black; 
-  border-radius: 4px;
-  margin-left: 5px;  
 }
-.search-todo select{  
+.select select{  
   border: 1px solid #008080;
-  padding: 10px;
+  padding: 10px 15px;
   margin-right: 5px;
   border-radius: 4px;
 }
@@ -73,16 +73,6 @@
 
 
 
-
-.main{
-  height: 500px;
-  max-height: 460px;
-  border: 2px solid;
-  border-radius: 2%;
-  padding: 20px;
-  margin: 20px;
-  display: inline-block;
-}
 
 .container{
   position: relative;
